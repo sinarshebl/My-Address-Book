@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-My Address Book.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-My Address BookTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RHAddressBook.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1EB173C229522A7FAA7640D58899A1BE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>88667A15E4EDAF123D2B3CDCFF5A2C47</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E856EECC6E95E7ACF9BF9A766622F4E7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F16F15AD8347C2086FDF53E34061B93A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
