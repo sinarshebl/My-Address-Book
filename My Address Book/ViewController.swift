@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  My Address Book
-//
-//  Created by Sinar Shebl on 8/4/15.
-//  Copyright (c) 2015 Sinar Shebl. All rights reserved.
-//
 
 import UIKit
 import AddressBook
@@ -20,6 +13,7 @@ class ViewController: UITableViewController {
     var database:CBLDatabase?
     var contactLiveQuery: CBLLiveQuery!
     var nameQuery: CBLQuery!
+    var importTheContact = ImportAddressBook()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,16 +25,18 @@ class ViewController: UITableViewController {
         
         var error: NSError?
         database = CBLManager.sharedInstance().databaseNamed("contacts", error: &error)!
+
+        var pdArray = rhAddressBook.people()
+        var cm = ContactModel(forNewDocumentInDatabase: database!)
         
         switch authorizationStatus {
         case .Authorized:
             println("You're Authorized!")
-            createAddressBook()
+            importTheContact.importPerson(cm, personDataArray: pdArray)
         case .Denied:
             Actions.showAlert(self, title: "Denied", message: "You've denied authorization")
             println("Authorization Denied")
         case .NotDetermined:
-            createAddressBook()
             ABAddressBookRequestAccessWithCompletion(nil, { (accepted:Bool, error:CFError!) -> Void in
                 if accepted {
                     println("Authorized!")
@@ -90,38 +86,37 @@ class ViewController: UITableViewController {
         return result?.count > 0
     }
 
-    func createAddressBook() {
-        var error: Unmanaged<CFErrorRef>?
-//        let addressBook: ABAddressBookRef? = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
-        
-        var personDataArray = rhAddressBook.people()
-        
-        for pd in personDataArray {
-            let contactModel = ContactModel(forNewDocumentInDatabase: database!)
-            if !nameExists(pd.name) {
-                contactModel.name = pd.name
-                
-                var phoneNums = pd.phoneNumbers
-                var contactNumberArray = [AnyObject]()
-                for var index:UInt = 0; index < RHMultiValue.count(phoneNums)(); index++ {
-                    var personPhoneNumbers: AnyObject! = phoneNums!.valueAtIndex(index)
-                    contactNumberArray.append(personPhoneNumbers)
-                }
-                contactModel.phones = contactNumberArray as! [String]
-
-                var imageData: NSData
-                if pd.hasImage() {
-                    var image = pd.originalImage()
-                    imageData = UIImagePNGRepresentation(image)
-                    contactModel.avatar = imageData
-                } else {
-                    imageData = UIImagePNGRepresentation(tempImage)
-                    contactModel.avatar = imageData
-                }
-                contactModel.save(nil)
-            }
-        }
-    }
+//    func createAddressBook() {
+////        var error: Unmanaged<CFErrorRef>?
+////        let addressBook: ABAddressBookRef? = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
+//        
+//        var personDataArray = rhAddressBook.people()
+//          var contactModel = ContactModel(forNewDocumentInDatabase: database!)
+//        for pd in personDataArray {
+//            let contactModel = ContactModel(forNewDocumentInDatabase: database!)
+//            if !nameExists(pd.name) {
+//                contactModel.name = pd.name
+//                
+//                var phoneNums = pd.phoneNumbers
+//                var contactNumberArray = [AnyObject]()
+//                for var index:UInt = 0; index < RHMultiValue.count(phoneNums)(); index++ {
+//                    var personPhoneNumbers: AnyObject! = phoneNums!.valueAtIndex(index)
+//                    contactNumberArray.append(personPhoneNumbers)
+//                }
+//                contactModel.phones = contactNumberArray as! [String]
+//
+//                var imageData: NSData
+//                if pd.hasImage() {
+//                    var image = pd.originalImageData()
+//                    contactModel.avatar = image
+//                } else {
+//                    imageData = UIImagePNGRepresentation(tempImage)
+//                    contactModel.avatar = imageData
+//                }
+//                contactModel.save(nil)
+//            }
+//        }
+//    }
     
     // document of row in query
     
@@ -140,8 +135,7 @@ class ViewController: UITableViewController {
             contactDetails.contactName = contactAtIndex(rowIndex!).name
 
             var phonesArray = contactAtIndex(rowIndex!).phones
-            var multiString = join("\n", phonesArray)
-            contactDetails.contactPhone = multiString
+            contactDetails.contactPhones = phonesArray
 
             let image = UIImage(data: contactAtIndex(rowIndex!).avatar)
             contactDetails.contactAvatar = image
@@ -153,6 +147,15 @@ class ViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // func call
+    
+    func callPhone(phone: String) {
+        let phoneString = phone.stringByReplacingOccurrencesOfString(" ", withString: "")
+        var url:NSURL = NSURL(string: "tel://\(phoneString)")!
+        UIApplication.sharedApplication().openURL(url)
+        Actions.showAlert(self, title: "Calling", message: "tel://\(phoneString)")
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -160,6 +163,8 @@ class ViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Int(contactLiveQuery?.rows?.count ?? 0)
     }
+    
+
     
     //    func phone
     
@@ -178,15 +183,14 @@ class ViewController: UITableViewController {
         
         let model = ContactCellModel(phone: phone, name: name, image: UIImage(data: image)) {
             println("call: \(name) \(phone)")
-            let phoneString = phone?.stringByReplacingOccurrencesOfString(" ", withString: "")
-            var url:NSURL = NSURL(string: "tel://\(phoneString!)")!
-            UIApplication.sharedApplication().openURL(url)
-            Actions.showAlert(self, title: "Calling", message: "tel://\(phoneString!)")
+            self.callPhone(phone!)
         }
         cell.configure(model)
         
         return cell
     }
+    
+    // Deleteing Contact 
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
@@ -203,7 +207,5 @@ class ViewController: UITableViewController {
             }
         }
     }
-    
-    
 }
 
