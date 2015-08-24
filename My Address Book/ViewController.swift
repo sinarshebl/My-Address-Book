@@ -17,81 +17,134 @@ class ViewController: UITableViewController {
     var abArray: [NSArray] = []
     var tempImage = UIImage(named: "avatar.png")
     let rhAddressBook = RHAddressBook()
+    var database:CBLDatabase?
+    var contactLiveQuery: CBLLiveQuery!
+    var nameQuery: CBLQuery!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        contactLiveQuery = ContactModel.queyContacts().asLiveQuery()
+        contactLiveQuery.addObserver(self, forKeyPath: "rows", options: .allZeros, context: nil)
+        
+        nameQuery = ContactModel.queyContacts()
+        
+        var error: NSError?
+        database = CBLManager.sharedInstance().databaseNamed("contacts", error: &error)!
+        
         switch authorizationStatus {
         case .Authorized:
             println("You're Authorized!")
             createAddressBook()
         case .Denied:
-            println("Aithorization Denied")
+            Actions.showAlert(self, title: "Denied", message: "You've denied authorization")
+            println("Authorization Denied")
         case .NotDetermined:
             createAddressBook()
-                ABAddressBookRequestAccessWithCompletion(nil, { (accepted:Bool, error:CFError!) -> Void in
-                    if accepted{
-                        println("Authorized!")
-                    } else{
-                        println("Denied")
-                    }
-                })
+            ABAddressBookRequestAccessWithCompletion(nil, { (accepted:Bool, error:CFError!) -> Void in
+                if accepted {
+                    println("Authorized!")
+                } else {
+                    println("Denied")
+                }
+            })
         case .Restricted:
-            println("Aithorization Restricted")
+            println("Authorization Restricted")
         default:
             println("There's been a problem")
         }
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        tableView.reloadData()
+    }
+    
+    func deleteDB() {
+        var errorDel: NSError?
+        if !self.database!.deleteDatabase(&errorDel) {
+            println(errorDel)
+        }
+        println("DATABASE DELETED")
+        self.database = nil
+    }
+    
+//    func addContactWithName(name: String, database: CBLDatabase) -> ContactModel? {
+//        
+//        let doc = database.createDocument()
+//        let contact = ContactModel(forDocument: doc)
+//        
+//        contact.name = name
+//        contact.save(nil)
+//        println("printing doc \(contact.document)")
+//        println("exists: \(database.existingDocumentWithID(contact.document!.documentID))")
+//        
+//        return contact
+//    }
+  
+    func nameExists(name: String) -> Bool{
+        var myError: NSError?
+        
+        nameQuery.keys = [name]
+        let result: AnyObject? = nameQuery.run(&myError)
+
+        return result?.count > 0
+    }
+
     func createAddressBook() {
         var error: Unmanaged<CFErrorRef>?
-        let addressBook: ABAddressBookRef? = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
-     
-        if addressBook == nil {
-            println("error")
-        }
+//        let addressBook: ABAddressBookRef? = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
         
         var personDataArray = rhAddressBook.people()
-        var personData = [AnyObject]()
-
+        
         for pd in personDataArray {
-            personData = []
-            var name = pd.name as String
-            personData.append(name)
+            let contactModel = ContactModel(forNewDocumentInDatabase: database!)
+            if !nameExists(pd.name) {
+                contactModel.name = pd.name
+                
+                var phoneNums = pd.phoneNumbers
+                var contactNumberArray = [AnyObject]()
+                for var index:UInt = 0; index < RHMultiValue.count(phoneNums)(); index++ {
+                    var personPhoneNumbers: AnyObject! = phoneNums!.valueAtIndex(index)
+                    contactNumberArray.append(personPhoneNumbers)
+                }
+                contactModel.phones = contactNumberArray as! [String]
 
-            var phoneNums = pd.phoneNumbers
-            var contactNumberArray = [AnyObject]()
-            for var index:UInt = 0; index < RHMultiValue.count(phoneNums)(); index++ {
-                var personPhoneNumbers: AnyObject! = phoneNums!.valueAtIndex(index)
-                contactNumberArray.append(personPhoneNumbers)
+                var imageData: NSData
+                if pd.hasImage() {
+                    var image = pd.originalImage()
+                    imageData = UIImagePNGRepresentation(image)
+                    contactModel.avatar = imageData
+                } else {
+                    imageData = UIImagePNGRepresentation(tempImage)
+                    contactModel.avatar = imageData
+                }
+                contactModel.save(nil)
             }
-            personData.append(contactNumberArray)
-            
-            if pd.hasImage() {
-                var image = pd.originalImage()
-                personData.append(image)
-            } else {
-                personData.append(tempImage!)
-            }
-
-            abArray.append(personData)
         }
+    }
+    
+    // document of row in query
+    
+    func contactAtIndex(index: Int) -> ContactModel {
+        let contactRow = contactLiveQuery.rows?.rowAtIndex(UInt(index))
+        let doc = contactRow?.document
+
+        return ContactModel(forDocument: doc!)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "contact"{
+        if segue.identifier == "contact" {
             var contactDetails: ContactDetails = segue.destinationViewController as! ContactDetails
             var rowIndex = self.tableView.indexPathForSelectedRow()?.row
             
-            contactDetails.contactName = self.abArray[rowIndex!][0] as? String
-            
-            var abc = self.abArray[rowIndex!][1] as? [String]
-            var multiString = join("\n", abc!)
-            
+            contactDetails.contactName = contactAtIndex(rowIndex!).name
+
+            var phonesArray = contactAtIndex(rowIndex!).phones
+            var multiString = join("\n", phonesArray)
             contactDetails.contactPhone = multiString
-            println(multiString)
-            contactDetails.contactAvatar = self.abArray[rowIndex!][2] as? UIImage
+
+            let image = UIImage(data: contactAtIndex(rowIndex!).avatar)
+            contactDetails.contactAvatar = image
         }
     }
     
@@ -103,38 +156,54 @@ class ViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return abArray.count
+        return Int(contactLiveQuery?.rows?.count ?? 0)
     }
- 
-//    func phone
+    
+    //    func phone
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! ContactCell
         
         var phone: String?
-        let name = abArray[indexPath.row][0] as! String
-
-        let numbers: NSArray = abArray[indexPath.row][1] as! NSArray
+        let personContact = contactAtIndex(indexPath.row)
+        let name = personContact.name
+        let image = personContact.avatar
+        
+        let numbers: NSArray = personContact.phones
         for number in numbers {
             phone = number as? String
         }
         
-        let avatar = abArray[indexPath.row][2] as! UIImage
-        
-        let model = ContactCellModel(phone: phone!, name: name, image: avatar) {
-            println("call: \(name) \(phone!)")
-            var url:NSURL = NSURL(string: "tel://\(phone!)")!
-            println(url)
+        let model = ContactCellModel(phone: phone, name: name, image: UIImage(data: image)) {
+            println("call: \(name) \(phone)")
+            let phoneString = phone?.stringByReplacingOccurrencesOfString(" ", withString: "")
+            var url:NSURL = NSURL(string: "tel://\(phoneString!)")!
             UIApplication.sharedApplication().openURL(url)
+            Actions.showAlert(self, title: "Calling", message: "tel://\(phoneString!)")
         }
-        
         cell.configure(model)
         
         return cell
     }
     
-
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            let nameToDel = contactAtIndex(indexPath.row).name
+            let nameToDelDocID = contactAtIndex(indexPath.row).document?.documentID
+            let doc = database?.documentWithID(nameToDelDocID!)
+            var error: NSError?
+            
+            if doc != nil {
+                doc?.deleteDocument(&error)
+                if error == nil {
+                    println("Contact deleted")
+                }
+            }
+        }
+    }
+    
+    
 }
 

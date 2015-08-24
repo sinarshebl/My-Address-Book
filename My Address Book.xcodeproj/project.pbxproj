@@ -7,8 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		362196641B85E80A00B369D9 /* call.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 362196631B85E80A00B369D9 /* call.jpg */; };
+		362196661B8637BF00B369D9 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362196651B8637BF00B369D9 /* Actions.swift */; };
+		364CF2881B836BED0099D848 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D2753F1B70C13200020CAA /* ViewController.swift */; };
+		364CF2891B836C3C0099D848 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F2B1B11B8331430087328E /* ContactModel.swift */; };
+		364CF28A1B836CBE0099D848 /* ContactDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C00EC51B77588100A09C80 /* ContactDetails.swift */; };
+		364CF28B1B836CC90099D848 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D2755F1B70C23B00020CAA /* ContactCell.swift */; };
 		36C00EC61B77588100A09C80 /* ContactDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C00EC51B77588100A09C80 /* ContactDetails.swift */; };
 		36C00EF11B78D39E00A09C80 /* RHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C00EF01B78D39E00A09C80 /* RHAddressBook.m */; };
+		36C3CAD41B8858F900CF4365 /* ContactPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C3CAD31B8858F900CF4365 /* ContactPhone.swift */; };
+		36C3CAD51B88733B00CF4365 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362196651B8637BF00B369D9 /* Actions.swift */; };
 		36D2753E1B70C13200020CAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D2753D1B70C13200020CAA /* AppDelegate.swift */; };
 		36D275401B70C13200020CAA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D2753F1B70C13200020CAA /* ViewController.swift */; };
 		36D275431B70C13200020CAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36D275411B70C13200020CAA /* Main.storyboard */; };
@@ -17,6 +25,8 @@
 		36D275541B70C13200020CAA /* My_Address_BookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D275531B70C13200020CAA /* My_Address_BookTests.swift */; };
 		36D2755E1B70C1D800020CAA /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 36D2755D1B70C1D800020CAA /* avatar.png */; };
 		36D275601B70C23B00020CAA /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D2755F1B70C23B00020CAA /* ContactCell.swift */; };
+		36D6B59A1B84C2E9005AC571 /* AddContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D6B5991B84C2E9005AC571 /* AddContact.swift */; };
+		36F2B1B21B8331430087328E /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F2B1B11B8331430087328E /* ContactModel.swift */; };
 		79FE25EFEFE8BEB4B13B2404 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0805259D840EC098B5CB0996 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -33,9 +43,12 @@
 /* Begin PBXFileReference section */
 		0805259D840EC098B5CB0996 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2066BB0B3DE78C8D19225706 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		362196631B85E80A00B369D9 /* call.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = call.jpg; sourceTree = "<group>"; };
+		362196651B8637BF00B369D9 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		36C00EC51B77588100A09C80 /* ContactDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetails.swift; sourceTree = "<group>"; };
 		36C00EEF1B78D39D00A09C80 /* My Address Book-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "My Address Book-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		36C00EF01B78D39E00A09C80 /* RHAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RHAddressBook.m; path = ../RHAddressBook.m; sourceTree = "<group>"; };
+		36C3CAD31B8858F900CF4365 /* ContactPhone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactPhone.swift; sourceTree = "<group>"; };
 		36D275381B70C13200020CAA /* My Address Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Address Book.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36D2753C1B70C13200020CAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36D2753D1B70C13200020CAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +61,8 @@
 		36D275531B70C13200020CAA /* My_Address_BookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = My_Address_BookTests.swift; sourceTree = "<group>"; };
 		36D2755D1B70C1D800020CAA /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		36D2755F1B70C23B00020CAA /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		36D6B5991B84C2E9005AC571 /* AddContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContact.swift; sourceTree = "<group>"; };
+		36F2B1B11B8331430087328E /* ContactModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		90B9E93DC0FD0F8BDF53DEAD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,11 +108,16 @@
 		36D2753A1B70C13200020CAA /* My Address Book */ = {
 			isa = PBXGroup;
 			children = (
+				36D2755D1B70C1D800020CAA /* avatar.png */,
+				362196631B85E80A00B369D9 /* call.jpg */,
+				36D275411B70C13200020CAA /* Main.storyboard */,
+				36C3CAD31B8858F900CF4365 /* ContactPhone.swift */,
 				36D2753D1B70C13200020CAA /* AppDelegate.swift */,
 				36C00EC51B77588100A09C80 /* ContactDetails.swift */,
-				36D2755D1B70C1D800020CAA /* avatar.png */,
+				36F2B1B11B8331430087328E /* ContactModel.swift */,
+				362196651B8637BF00B369D9 /* Actions.swift */,
 				36D2753F1B70C13200020CAA /* ViewController.swift */,
-				36D275411B70C13200020CAA /* Main.storyboard */,
+				36D6B5991B84C2E9005AC571 /* AddContact.swift */,
 				36D2755F1B70C23B00020CAA /* ContactCell.swift */,
 				36D275441B70C13200020CAA /* Images.xcassets */,
 				36D275461B70C13200020CAA /* LaunchScreen.xib */,
@@ -233,6 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				362196641B85E80A00B369D9 /* call.jpg in Resources */,
 				36D2755E1B70C1D800020CAA /* avatar.png in Resources */,
 				36D275431B70C13200020CAA /* Main.storyboard in Resources */,
 				36D275481B70C13200020CAA /* LaunchScreen.xib in Resources */,
@@ -303,8 +324,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				36C00EF11B78D39E00A09C80 /* RHAddressBook.m in Sources */,
+				362196661B8637BF00B369D9 /* Actions.swift in Sources */,
+				36D6B59A1B84C2E9005AC571 /* AddContact.swift in Sources */,
 				36D275601B70C23B00020CAA /* ContactCell.swift in Sources */,
+				36F2B1B21B8331430087328E /* ContactModel.swift in Sources */,
 				36C00EC61B77588100A09C80 /* ContactDetails.swift in Sources */,
+				36C3CAD41B8858F900CF4365 /* ContactPhone.swift in Sources */,
 				36D275401B70C13200020CAA /* ViewController.swift in Sources */,
 				36D2753E1B70C13200020CAA /* AppDelegate.swift in Sources */,
 			);
@@ -314,7 +339,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				364CF28B1B836CC90099D848 /* ContactCell.swift in Sources */,
+				364CF2881B836BED0099D848 /* ViewController.swift in Sources */,
+				364CF28A1B836CBE0099D848 /* ContactDetails.swift in Sources */,
+				36C3CAD51B88733B00CF4365 /* Actions.swift in Sources */,
 				36D275541B70C13200020CAA /* My_Address_BookTests.swift in Sources */,
+				364CF2891B836C3C0099D848 /* ContactModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +488,7 @@
 		};
 		36D2755B1B70C13200020CAA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90B9E93DC0FD0F8BDF53DEAD /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -471,6 +502,7 @@
 				INFOPLIST_FILE = "My Address BookTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "My Address Book-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/My Address Book.app/My Address Book";
 			};
 			name = Debug;
@@ -486,6 +518,7 @@
 				INFOPLIST_FILE = "My Address BookTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "My Address Book-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/My Address Book.app/My Address Book";
 			};
 			name = Release;

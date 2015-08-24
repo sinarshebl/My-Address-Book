@@ -11,14 +11,14 @@ import UIKit
 typealias CallHandler = () -> ()
 
 protocol ContactCellModelProtocol {
-    var phone: String { get }
+    var phone: String? { get }
     var name: String { get }
     var image: UIImage? { get }
     var callHandler: CallHandler { get }
 }
 
 struct ContactCellModel: ContactCellModelProtocol {
-    let phone: String
+    let phone: String?
     let name: String
     let image: UIImage?
     let callHandler: CallHandler
@@ -36,7 +36,6 @@ class ContactCell: UITableViewCell {
     @IBAction func callAction(sender: AnyObject) {
         callHandler?()
     }
-    
 }
 
 
