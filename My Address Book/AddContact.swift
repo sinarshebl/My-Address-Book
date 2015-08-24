@@ -40,7 +40,7 @@ class AddContact: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             contactModel.avatar = UIImagePNGRepresentation(pickedImage.image)
             contactModel.save(nil)
             self.navigationController?.popViewControllerAnimated(true)
-            Actions.showAlertAndDismiss(self, title: "Successfuly ", message: "Contact has been added")
+            Actions.showAlert(self, title: "Successfuly ", message: "Contact has been added")
         }
     }
     

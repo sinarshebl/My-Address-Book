@@ -207,15 +207,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ieQ-eG-deN">
-                                <rect key="frame" x="45" y="347" width="230" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="230" id="EY2-HD-YyY"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ciF-8i-Tw3">
                                 <rect key="frame" x="45" y="312" width="50" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -241,18 +232,26 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L9G-Zs-Cxq">
+                                <rect key="frame" x="45" y="353" width="240" height="128"/>
+                                <connections>
+                                    <segue destination="dOV-UA-QdO" kind="embed" identifier="phonesTable" id="p1M-8H-JnC"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ieQ-eG-deN" firstAttribute="top" secondItem="ciF-8i-Tw3" secondAttribute="bottom" constant="14" id="0N9-am-sfU"/>
-                            <constraint firstItem="ciF-8i-Tw3" firstAttribute="leading" secondItem="ieQ-eG-deN" secondAttribute="leading" id="Bal-zJ-zlr"/>
                             <constraint firstItem="u4Y-t9-dOp" firstAttribute="top" secondItem="EFm-pJ-Xy0" secondAttribute="bottom" constant="47" id="GMs-GQ-Q6D"/>
                             <constraint firstItem="u4Y-t9-dOp" firstAttribute="centerY" secondItem="l1O-cQ-CQF" secondAttribute="centerY" id="J2y-yN-CTa"/>
-                            <constraint firstItem="l1O-cQ-CQF" firstAttribute="leading" secondItem="ieQ-eG-deN" secondAttribute="leading" constant="135" id="b33-om-VD5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="L9G-Zs-Cxq" secondAttribute="trailing" constant="19" id="ZAg-zN-98W"/>
+                            <constraint firstItem="L9G-Zs-Cxq" firstAttribute="leading" secondItem="YPR-b8-b8I" secondAttribute="leadingMargin" constant="29" id="ZSD-9A-Y1y"/>
+                            <constraint firstItem="L9G-Zs-Cxq" firstAttribute="top" secondItem="YPR-b8-b8I" secondAttribute="top" constant="353" id="ccu-Ey-LxZ"/>
                             <constraint firstItem="FaT-91-Y57" firstAttribute="leading" secondItem="u4Y-t9-dOp" secondAttribute="trailing" constant="8" symbolic="YES" id="ftA-Cn-xni"/>
                             <constraint firstItem="l1O-cQ-CQF" firstAttribute="top" secondItem="FaT-91-Y57" secondAttribute="bottom" constant="19" id="h5G-fe-eGc"/>
-                            <constraint firstItem="ieQ-eG-deN" firstAttribute="top" secondItem="l1O-cQ-CQF" secondAttribute="bottom" constant="144" id="kdm-5N-fKg"/>
+                            <constraint firstItem="L9G-Zs-Cxq" firstAttribute="leading" secondItem="ciF-8i-Tw3" secondAttribute="leading" id="ij4-5A-JCc"/>
+                            <constraint firstItem="L9G-Zs-Cxq" firstAttribute="top" secondItem="ciF-8i-Tw3" secondAttribute="bottom" constant="20" id="lT1-i1-Tky"/>
                             <constraint firstItem="u4Y-t9-dOp" firstAttribute="leading" secondItem="YPR-b8-b8I" secondAttribute="leadingMargin" constant="-20" id="mU9-v4-lRP"/>
+                            <constraint firstItem="p8l-Nh-JT8" firstAttribute="top" secondItem="L9G-Zs-Cxq" secondAttribute="bottom" constant="87" id="vjq-qi-ATG"/>
                             <constraint firstItem="FaT-91-Y57" firstAttribute="leading" secondItem="l1O-cQ-CQF" secondAttribute="leading" id="zuM-17-IWR"/>
                         </constraints>
                     </view>
@@ -261,12 +260,37 @@
                     <connections>
                         <outlet property="avatar" destination="u4Y-t9-dOp" id="wzo-ss-NdJ"/>
                         <outlet property="name" destination="l1O-cQ-CQF" id="MZB-6i-1YA"/>
-                        <outlet property="phone" destination="ieQ-eG-deN" id="yu8-YY-7by"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zi2-PE-lDu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1221" y="665"/>
+        </scene>
+        <!--Contact PhoneTVC-->
+        <scene sceneID="6o9-lI-FkE">
+            <objects>
+                <tableViewController id="dOV-UA-QdO" customClass="ContactPhoneTVC" customModule="My_Address_Book" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="CWt-vy-Fe1">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="phoneCell" selectionStyle="default" indentationWidth="10" id="Mfh-DC-08u">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mfh-DC-08u" id="BjM-cC-yke">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="dOV-UA-QdO" id="et1-Dh-WVq"/>
+                            <outlet property="delegate" destination="dOV-UA-QdO" id="kF5-R6-OKs"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S2b-Qb-8Ng" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1609" y="744"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZzO-dH-JQY">
